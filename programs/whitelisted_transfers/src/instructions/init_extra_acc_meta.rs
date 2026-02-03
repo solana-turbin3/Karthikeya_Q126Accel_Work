@@ -28,12 +28,12 @@ impl<'info> InitExtraAccMeta<'info> {
         let signer_status_pda = ExtraAccountMeta::new_with_seeds(
             &[
                 Seed::Literal {
-                    bytes: b"whitelist".to_vec(),
+                    bytes: b"whitelist-status".to_vec(),
                 },
-                Seed::AccountKey { index: 1 }, // index 1= destination
+                Seed::AccountKey { index: 2 }, // index 2= destination
             ],
             false, // is_signer
-            true,  // is_writable
+            false,  // is_writable
         )
         .unwrap();
         let account_metas = vec![signer_status_pda];

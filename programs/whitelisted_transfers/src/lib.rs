@@ -1,6 +1,7 @@
 #![allow(unexpected_cfgs)]
 use anchor_lang::prelude::*;
 
+use spl_discriminator::SplDiscriminate;
 use spl_transfer_hook_interface::instruction::ExecuteInstruction;
 
 mod instructions;
@@ -40,6 +41,8 @@ pub mod whitelisted_transfers {
         .unwrap();
         Ok(())
     }
+
+    #[instruction(discriminator = ExecuteInstruction::SPL_DISCRIMINATOR_SLICE)]
     pub fn transfer_hook(ctx: Context<TransferHook>, amount: u64) -> Result<()> {
         ctx.accounts.transfer_hook(amount)?;
         Ok(())

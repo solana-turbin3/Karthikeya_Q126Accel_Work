@@ -16,7 +16,7 @@ use anchor_spl::{
     }
 };
 
-use crate::state::Whitelist;
+use crate::state::Status;
 
 #[derive(Accounts)]
 pub struct TransferHook<'info> {
@@ -39,10 +39,10 @@ pub struct TransferHook<'info> {
     )]
     pub extra_account_meta_list: UncheckedAccount<'info>,
     #[account(
-        seeds = [b"whitelist",owner.key().as_ref()], 
+        seeds = [b"whitelist-status",destination_token.key().as_ref()], 
         bump ,
     )]
-    pub whitelist: Account<'info, Whitelist>,
+    pub whitelist: Account<'info, Status>,
 }
 
 impl<'info> TransferHook<'info> {
