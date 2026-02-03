@@ -17,6 +17,7 @@ pub struct InitExtraAccMeta<'info> {
     seeds = [b"extra-account-metas",mint.key().as_ref()],
     bump
   )]
+    /// CHECK: extra account checked at token Program
     pub extra_acc_meta_list: AccountInfo<'info>,
     pub mint: InterfaceAccount<'info, Mint>,
     pub system_program: Program<'info, System>,
