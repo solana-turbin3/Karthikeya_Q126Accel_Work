@@ -1,0 +1,6 @@
+[submodule "token-extensions"]
+	path = token-extensions
+	url = https://github.com/KarthikeyaGundumogula/token-extensions.git
+[submodule "escrow-litesvm"]
+	path = escrow-litesvm
+	url = https://github.com/KarthikeyaGundumogula/escrow-litesvm.git
