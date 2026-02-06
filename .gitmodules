@@ -4,3 +4,6 @@
 [submodule "escrow-litesvm"]
 	path = escrow-litesvm
 	url = https://github.com/KarthikeyaGundumogula/escrow-litesvm.git
+[submodule "whitelisted-vault-token"]
+	path = whitelisted-vault-token
+	url = https://github.com/KarthikeyaGundumogula/whitelisted-vault-token.git
