@@ -7,3 +7,6 @@
 [submodule "whitelisted-vault-token"]
 	path = whitelisted-vault-token
 	url = https://github.com/KarthikeyaGundumogula/whitelisted-vault-token.git
+[submodule "er-vrf"]
+	path = er-vrf
+	url = https://github.com/KarthikeyaGundumogula/er-vrf.git
