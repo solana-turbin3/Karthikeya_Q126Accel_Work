@@ -10,3 +10,6 @@
 [submodule "er-vrf"]
 	path = er-vrf
 	url = https://github.com/KarthikeyaGundumogula/er-vrf.git
+[submodule "tuk-tuk-scheduled-vrf"]
+	path = tuk-tuk-scheduled-vrf
+	url = https://github.com/KarthikeyaGundumogula/tuk-tuk-scheduled-vrf.git
