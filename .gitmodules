@@ -13,6 +13,3 @@
 [submodule "tuk-tuk-scheduled-vrf"]
 	path = tuk-tuk-scheduled-vrf
 	url = https://github.com/KarthikeyaGundumogula/tuk-tuk-scheduled-vrf.git
-[submodule "scheduled-gpt-oracle"]
-	path = scheduled-gpt-oracle
-	url = https://github.com/KarthikeyaGundumogula/scheduled-gpt-oracle.git
