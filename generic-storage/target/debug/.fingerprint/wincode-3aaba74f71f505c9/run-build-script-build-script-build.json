@@ -1,1 +1,0 @@
-{"rustc":4723136837156968084,"features":"","declared_features":"","target":0,"profile":0,"path":0,"deps":[[14863888759974725496,"build_script_build",false,16465519048174709858]],"local":[{"RerunIfChanged":{"output":"debug/build/wincode-3aaba74f71f505c9/output","paths":["codegen/mod.rs","codegen/tuple.rs","build.rs"]}}],"rustflags":[],"config":0,"compile_kind":0}
