@@ -16,3 +16,6 @@
 [submodule "scheduled-gpt-oracle"]
 	path = scheduled-gpt-oracle
 	url = https://github.com/KarthikeyaGundumogula/scheduled-gpt-oracle.git
+[submodule "generic-storage"]
+	path = generic-storage
+	url = https://github.com/KarthikeyaGundumogula/generic-storage.git
