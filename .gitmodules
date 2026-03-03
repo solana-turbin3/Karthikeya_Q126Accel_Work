@@ -22,3 +22,6 @@
 [submodule "pinocchio-fundraiser"]
 	path = pinocchio-fundraiser
 	url = https://github.com/KarthikeyaGundumogula/pinocchio-fundraiser.git
+[submodule "staking-mpl-core"]
+	path = staking-mpl-core
+	url = https://github.com/KarthikeyaGundumogula/staking-mpl-core.git
