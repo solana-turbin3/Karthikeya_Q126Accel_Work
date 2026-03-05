@@ -38,7 +38,7 @@ A two-party token escrow program built with [Pinocchio](https://github.com/anza-
 
 ### [Pinocchio Fundraiser](https://github.com/KarthikeyaGundumogula/pinocchio-fundraiser)
 
-A token fundraising program built with [Pinocchio](https://github.com/anza-xyz/pinocchio) - no Anchor, no allocator, no std. A maker creates a fundraiser specifying a target token and amount, contributors deposit into a shared vault, and the maker claims the full balance once the fundraiser ends. Contributors can refund their share at any time. Uses a custom BPF entrypoint with a `peek_discriminator` function that traverses the raw account buffer to read the instruction discriminator before any account parsing begins. All CPIs use `invoke_signed_unchecked` to bypass borrow validation overhead, and the vault is pre-created as an ATA by the client to eliminate two CPIs from the initialize path. Tests use [LiteSVM](https://github.com/LiteSVM/litesvm) with a pinocchio-optimized token program fixture. CUs: initialize 1,371 - create_contributor 1,359 - contribute 1,323 - checker 1,311 - refund 1,337.
+A token fundraising program built with [Pinocchio](https://github.com/anza-xyz/pinocchio) - no Anchor, no allocator, no std. A maker creates a fundraiser specifying a target token and amount, contributors deposit into a shared vault, and the maker claims the full balance once the fundraiser ends. Contributors can refund their share at any time.
 
 ### [NFT Staking (Metaplex Core)](https://github.com/KarthikeyaGundumogula/staking-mpl-core)
 
