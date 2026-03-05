@@ -25,3 +25,6 @@
 [submodule "staking-mpl-core"]
 	path = staking-mpl-core
 	url = https://github.com/KarthikeyaGundumogula/staking-mpl-core.git
+[submodule "generic-storage"]
+	path = generic-storage
+	url = https://github.com/KarthikeyaGundumogula/generic-storage.git
