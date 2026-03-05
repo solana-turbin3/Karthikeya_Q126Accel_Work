@@ -1,6 +1,6 @@
 ## Builds 
 
-### [Whitelist Transfer Hook](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/whitelist-transfer-hook)
+### [Whitelist Transfer Hook](https://github.com/KarthikeyaGundumogula/token-extensions)
 
 A Solana program that enforces whitelist-based access control on token transfers using the SPL Token 2022 Transfer Hook interface. Only addresses added to the whitelist by the admin can transfer tokens. Each whitelisted address gets its own PDA account for O(1) lookup during transfer validation.
 
@@ -8,46 +8,38 @@ A Solana program that enforces whitelist-based access control on token transfers
 
 A two-party token escrow program built with Anchor. The maker deposits Token A into a PDA-controlled vault and specifies how much of Token B they want in return. A 5-day time lock is enforced after escrow creation before a taker can accept the offer, atomically swapping Token B for the vault's Token A. The maker can also cancel and reclaim their tokens via a refund instruction. Tests use [LiteSVM](https://github.com/LiteSVM/litesvm) with time travel (warp) for fast, in-process Solana program testing without a local validator.
 
-### [Transfer Hook Vault](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/transfer-hook-vault)
+### [Transfer Hook Vault](https://github.com/KarthikeyaGundumogula/whitelisted-vault-token)
 
-A whitelisted token vault built with Anchor and Token-2022. Only admin-approved users can hold and transfer the vault token - every `transfer_checked` triggers the on-chain transfer hook, which validates the sender against a PDA-based whitelist for O(1) lookup. Deposit and withdraw use a paired-instruction pattern (ledger update + `transfer_checked` in one atomic transaction) to work around Solana's reentrancy restriction. Withdrawals use a delegate approval so the hook always checks the user's whitelist rather than the vault PDA. The mint includes TransferHook, MetadataPointer, and TokenMetadata extensions. Tests use [LiteSVM](https://github.com/LiteSVM/litesvm) for fast, in-process testing without a local validator.
+A whitelisted token vault built with Anchor and Token-2022. Only admin-approved users can hold and transfer the vault token - every `transfer_checked` triggers the on-chain transfer hook, which validates the sender against a PDA-based whitelist for O(1) lookup. Deposit and withdraw use a paired-instruction pattern (ledger update + `transfer_checked` in one atomic transaction) to work around Solana's reentrancy restriction and uses Instruction introspection to transfer amount verification. Withdrawals use a delegate approval so the hook always checks the user's whitelist rather than the vault PDA. The mint includes TransferHook, MetadataPointer, and TokenMetadata extensions. Tests use [LiteSVM](https://github.com/LiteSVM/litesvm) for fast, in-process testing without a local validator.
 
 ### [MagicBlock VRF](https://github.com/KarthikeyaGundumogula/er-vrf)
 
 A Solana program that integrates MagicBlock's Verifiable Random Function (VRF) to update on-chain user state with verifiable randomness. Implements VRF in two contexts: on the Solana base layer using the standard oracle queue, and inside a MagicBlock ephemeral rollup for faster and cheaper execution using the ephemeral oracle queue. The VRF request and callback follow a two-transaction pattern where the program CPIs into the VRF program to queue the request, and the oracle triggers the consume callback to write the random value into the user account.
 
-### [TukTuk Escrow](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/tuktuk-escrow)
+### [TukTuk Scheduled VRF](https://github.com/KarthikeyaGundumogula/tuk-tuk-scheduled-vrf)
 
-A trustless token escrow program with automated expiry refunds powered by [TukTuk](https://www.tuktuk.fun) - a permissionless crank scheduler on Solana. The maker deposits Token A and specifies how much Token B they want in return. A taker can fulfill the trade before the escrow expires. If no taker shows up, TukTuk's crankers automatically call `auto_refund` at expiry and return the maker's tokens - no manual intervention needed. Deployed and tested end-to-end on devnet.
+A Solana program that schedules regular VRF requests using the TukTuk scheduling protocol. An agent is initialized with a VRF request template via CPI to the VRF program's `create_vrf_context`. TukTuk's crankers automatically fire `request_randomness` on a schedule, the VRF oracle processes the request off-chain, and calls back into the program with the random value via the `callback_from_vrf` instruction. Deployed and tested end-to-end on devnet.
 
-### [GPT Oracle](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/gpt-oracle)
+### [Scheduled GPT Oracle](https://github.com/KarthikeyaGundumogula/scheduled-gpt-oracle)
 
 A Solana program that queries an on-chain AI oracle (powered by [MagicBlock](https://magicblock.gg)) and schedules those queries automatically using [TukTuk](https://www.tuktuk.fun). An agent is initialized with a system prompt via CPI to the oracle's `create_llm_context`. TukTuk's crankers automatically fire `interact_with_llm` on a schedule, the oracle processes the query off-chain via GPT, and calls back into the program with the response via the `callback_from_llm` instruction. Deployed and tested end-to-end on devnet.
 
-### [Pyth Scheduler](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/pyth-scheduler)
-
-A Solana program that fetches the SOL/USD price from [Pyth](https://pyth.network)'s pull oracle and stores it on-chain, with automated recurring updates powered by [TukTuk](https://www.tuktuk.fun). Uses the pull oracle model - the latest signed price is fetched from Hermes and posted to the Pyth Receiver program before being read. TukTuk's crankers automatically call `update_price` on a schedule to keep the stored price fresh. Deployed and tested end-to-end on devnet.
-
-### [Generic Storage](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/generic-storage)
+### [Generic Storage](https://github.com/KarthikeyaGundumogula/generic-storage.git)
 
 A generic storage system in Rust that serializes and deserializes data using three different formats: Borsh, Wincode, and JSON. Built around a `Serializer<T>` trait and a `Storage<T, S>` container that stores raw bytes internally and uses `PhantomData<T>` for zero-cost type tracking. Demonstrates generic traits, associated type constraints (`Src = T`, `Dst = T`), higher-ranked trait bounds (`for<'a>`), and the difference between `Deserialize<'de>` and `DeserializeOwned`.
-
-### [Persistent Todo Queue](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/persistent-todo-queue)
-
-A CLI-based todo application in Rust that stores tasks in a FIFO queue and persists them to disk using Borsh serialization. Implements a generic `Queue<T>` using two stacks instead of `VecDeque` for amortized O(1) enqueue and dequeue. Tasks survive program restarts, IDs never repeat even after completion, and the queue is serialized to a binary file after every mutation.
 
 ### [KV Store](https://github.com/solana-turbin3/breakout1-kv-store/tree/6c152fd7df1c7abf610d6822034ae38b85cdc363)
 
 A log-structured, persistent key-value store in Rust inspired by the [Bitcask](https://riak.com/assets/bitcask-a-log-structured-hash-table-for-fast-key-value-data.pdf) storage model. All writes are appended to a single on-disk log file while a `RwLock`-protected in-memory `HashMap` index tracks each key's latest `(offset, length)` for O(1) lookups with a single seek per read. Deletions write a tombstone entry (`value: None`). Compaction rewrites the log retaining only live keys, and if the space savings are under 25%, the compaction threshold is doubled and persisted back into the 12-byte file header (`KVS1` magic + threshold) to avoid thrashing. Concurrent reads are served through a pool of up to 8 cached file handles. Exposed as both a library crate and a REST API (`actix-web` on port 8080) with `set`, `get`, and `delete` endpoints. Includes 31 integration tests covering CRUD, persistence across restarts, compaction correctness, and multithreaded concurrency, plus Criterion benchmarks (single `set` ~12 µs, single `get` ~800 ns).
 
-### [Pinocchio Escrow](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/pinocchio-escrow)
+### [Pinocchio Escrow](https://github.com/KarthikeyaGundumogula/pinocchio-escrow)
 
 A two-party token escrow program built with [Pinocchio](https://github.com/anza-xyz/pinocchio) -- no Anchor, no allocator, no std. The same make/take/cancel logic is implemented twice: an `unsafe` variant that parses instruction data with manual `u64::from_le_bytes` byte indexing and reads account state via raw pointer casting, and a `wincode` variant that uses `#[derive(SchemaRead)]` for schema-driven deserialization. Both variants are benchmarked side by side in a LiteSVM test that prints a CU comparison table. The unsafe variant is cheaper on `make` by roughly 1500 CUs due to SBPF-native byte load instructions; take and cancel are within 20 CUs of each other.
 
-### [Pinocchio Fundraiser](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/pinocchio-fundraiser)
+### [Pinocchio Fundraiser](https://github.com/KarthikeyaGundumogula/pinocchio-fundraiser)
 
 A token fundraising program built with [Pinocchio](https://github.com/anza-xyz/pinocchio) - no Anchor, no allocator, no std. A maker creates a fundraiser specifying a target token and amount, contributors deposit into a shared vault, and the maker claims the full balance once the fundraiser ends. Contributors can refund their share at any time. Uses a custom BPF entrypoint with a `peek_discriminator` function that traverses the raw account buffer to read the instruction discriminator before any account parsing begins. All CPIs use `invoke_signed_unchecked` to bypass borrow validation overhead, and the vault is pre-created as an ATA by the client to eliminate two CPIs from the initialize path. Tests use [LiteSVM](https://github.com/LiteSVM/litesvm) with a pinocchio-optimized token program fixture. CUs: initialize 1,371 - create_contributor 1,359 - contribute 1,323 - checker 1,311 - refund 1,337.
 
-### [NFT Staking (Metaplex Core)](https://github.com/solana-turbin3/q1_acc_avhi/tree/main/nft-staking)
+### [NFT Staking (Metaplex Core)](https://github.com/KarthikeyaGundumogula/staking-mpl-core)
 
 An NFT staking program built with Anchor on top of [Metaplex Core](https://developers.metaplex.com/core) (mpl-core). Users stake NFTs from a managed collection, which freezes them via the FreezeDelegate plugin and starts accruing reward tokens at a configurable rate per day. Stakers can claim rewards without unstaking, or burn their staked NFT early for a bonus payout (Burn-to-Earn). The collection tracks a live `total_staked` counter stored directly in the collection's Attributes plugin, updated on every stake, unstake, and burn. An external Oracle plugin adapter gates all NFT transfers to a 9AM-5PM UTC window - a permissionless crank updates the oracle's approval/rejection state and pays out `REWARD_LAMPORTS` to the caller when triggered at exactly the window boundaries. Deployed and tested end-to-end on devnet.
